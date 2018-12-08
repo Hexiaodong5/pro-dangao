@@ -73,23 +73,22 @@
             }
         },
         created(){
-            // this.pid = this.$router.params.pid;
-            this.pid = 1;
+            this.pid = this.$router.history.current.params.pid;
+            // console.log(this.$router)
+            // this.pid = 1;
             this.loadData();
         },
         methods: {
             loadData(){
                 this.$http.get(`http://127.0.0.1/xbk/data/product/details.php?pid=${this.pid}`)
                         .then((res)=>{
+                            
                             this.detail = res.data.details[0];
                             this.sizeList = res.data.details;
                             for(let n = 0; n<this.sizeList.length;n++){
-                                console.log(this.sizeList[n])
-                                console.log(this.sizeList[n].detail)
                                 let arr = this.sizeList[n].detail.split("/");
                                 this.sizeList[n].detail = [];
                                 this.sizeList[n].detail.push(arr)
-                                console.log(this.sizeList[n].detail)
                             }
                             this.sizeCur = this.sizeList[0];
                             
@@ -105,7 +104,6 @@
             },
             changeSize(index){
                 this.checkNum = index;
-                console.log(index);
                 this.sizeCur = this.sizeList[index];
                 this.sizeObj = this.sizeCur['detail'][0];
                 this.price = this.sizeCur['price'];
@@ -115,7 +113,7 @@
                 if(this.isDShow == false){
                     this.isDShow = true;
                 }else{
-                    var uid = localStorage.getItem('uid');
+                    var uid = sessionStorage.getItem('loginUid');
                     if(uid){
                         this.$http.get(`http://127.0.0.1/xbk/data/cart/add.php?pid=${this.pid}&uid=${uid}`)
                                     .then((res)=>{

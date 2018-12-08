@@ -82,7 +82,7 @@ export default {
             }
         },
         loadData(){
-            var uid = localStorage.getItem('uid');
+            var uid = sessionStorage.getItem('loginUid');
             console.log(uid);
             if(!uid){
                 return ;

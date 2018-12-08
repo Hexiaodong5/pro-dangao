@@ -1,21 +1,12 @@
 <template>
     <div id="footer">
-        <span class="guide_item" @click="lintTo('')">
-            <i class="iconfont">&#xe6c8;</i>
-            首页
+
+        <span v-for="(item,index) in footerList" :key="index" @click="goTo(item.path)" class="guide_item">
+            <!-- {{item.icon}} -->
+            <i :class="item.class"></i>
+            {{ item.name }}
         </span>
-        <span class="guide_item" @click="lintTo('classify')">
-            <i class="iconfont">&#xe7f9;</i>
-            分类
-        </span>
-        <span class="guide_item" @click="lintTo('discuss')">
-            <i class="iconfont">&#xe60a;</i>
-            社区
-        </span>
-        <span class="guide_item" @click="lintTo('mine')">
-            <i class="iconfont">&#xe600;</i>
-            我的
-        </span>
+        
     </div>
 </template>
 
@@ -23,12 +14,17 @@
 export default {
     data: function(){
         return {
-            curPage: 'main'
+            footerList:[
+                {name: '首页',class: 'iconfont icon-index',path:'/'},
+                {name: '分类',class: 'iconfont icon-classify2',path:'/classify'},
+                {name: '社区',class: 'iconfont icon-community',path:'/discuss'},
+                {name: '我的',class: 'iconfont icon-mine',path:'/mine'}           
+             ]
         }
     },
     methods: {
-        lingTo(path){
-            this.$router.push("/"+path)
+        goTo(path){
+            this.$router.push(path)
         }
     }
 }
@@ -44,10 +40,11 @@ export default {
     display: flex;
     box-shadow: 0 -0.026667rem 0.053333rem rgba(0, 0, 0, .1);
     background: #fafafa;
+    
 }
 .guide_item{
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     text-align: center;
     margin-bottom: .2rem;

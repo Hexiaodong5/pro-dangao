@@ -5,36 +5,75 @@
             登录
         </div>
         <div class="content">
-            <input type="text" class="uname" placeholder="请输入手机号" v-model="uname" @blur="checkUname"> 
+
+            <input type="text"  class="uname" placeholder="请输入用户名" v-model="uname"  @blur="checkUname"> 
+
             <br>
+
             <div class="help_box">
-                <span v-show="isUname">请输入用户名</span>
-                <span v-show="isUnameCan" class="isUnameCan">用户存在</span>
-                <span v-show="isUnameErr">用户不存在, 请重新输入</span>
+
+                <span v-show="isUname">
+                    请输入用户名
+                </span>
+
+                <!-- <span v-show="isUnameCan" class="isUnameCan">
+                    用户存在
+                </span> -->
+
+                <span v-show="isUnameErr">
+                    用户不存在, 请重新输入
+                </span>
+
             </div>
-            <input type="password" class="upwd" placeholder="请输入密码" v-model="upwd" @blur="checkPwd">
+
+
+            <input type="password" class="upwd"   placeholder="请输入密码" v-model="upwd"  @blur="checkPwd">
+
             <br>
+
             <div class="help_box">
-                <span v-show="isUpwdErr">密码不正确, 请重新输入</span>
-                <span v-show="isUpwd">请输入密码</span>
+
+                <span v-show="isUpwd">
+                    请输入密码
+                </span>
+
+                <span v-show="isUpwdErr01">
+                    请输入 6~8 位字母数字组合
+                </span>
+
+
+                <span v-show="isUpwdErr">
+                    密码不正确, 请重新输入
+                </span>
+
+      
             </div>
+
             <button @click="login">立即登录</button>
+            
             <div class="toReg">
                 还没注册?
                 <router-link to="/regiter">立即注册</router-link>
             </div>
+
             <div class="loginSucc" v-if="loginSucc">
+
                 <div class="sContent">
                     登录成功
                     <br>
                     <span>{{ time }}秒后转到首页</span>
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </template>
 
 <script>
+
 export default {
     data:function(){
         return {
@@ -44,8 +83,9 @@ export default {
             isUnameCan: false,
             isUnameErr: false,
             isUpwdErr: false,
+            isUpwdErr01: false,
             isUpwd: false,
-            time: 3,
+            time: 5,
             loginSucc: false
         }
     },
@@ -58,51 +98,90 @@ export default {
                 this.$http.get(`http://localhost/xbk/data/user/check_uname.php?uname=${this.uname}`)
                             .then((res)=>{
                                 if(res.data.code == 201){
+
                                     this.isUnameCan = true;
                                     this.isUnameErr = false;
+
                                 }else if(res.data.code == 200){
+
                                     this.isUnameErr = true;
                                     this.isUnameCan = false;
                                 }
                             })
             }else{
                 this.isUname = true;
+                this.isUnameCan= false;
+                this.isUnameErr= false;
             }
         },
         checkPwd(){
+
             var reg = /^[a-zA-Z\d]{6,8}$/;
-            if(!reg.test(this.upwd)){
-                this.isUpwd = true;
+
+            if(this.upwd != ""){
+                
+                if( !reg.test(this.upwd) ){
+                    this.isUpwdErr01 = true;
+                }else{
+                    this.isUpwdErr01 = false;
+                }
+
             }else{
+
                 this.isUpwd = false;
             }
         },
         login(){
             if(!this.isUpwd && !this.isUname && this.upwd!="" && this.uname != ""){
+                
                 this.$http.get(`http://localhost/xbk/data/user/login.php?uname=${this.uname}&upwd=${this.upwd}`)
                             .then((res)=>{
-                                console.log('login')
-                                console.log(res.data)
+
                                 if(res.data.code == 200){
+
                                     this.loginSucc = true;
-                                    console.log(1)
-                                    var uid = res.data.uid;
-                                    localStorage.setItem('uid',uid);
+
+                                    this.setStorage(res.data);
+
+                                    // console.log(
+                                    //     sessionStorage.getItem('loginUid'),
+                                    //     sessionStorage.getItem('loginName'),
+                                    //     sessionStorage.getItem('loginAvatar')
+                                    //     );
+
                                     var timer = setInterval(()=>{
+
                                         this.time--;
+
                                         if(this.time == 0){
+
                                             clearInterval(timer);
+
                                             timer = null;
+
                                             this.loginSucc = false;
-                                            this.$router.push('/index');
+
+                                            this.$router.push('/');
                                         }
                                     },1000)
-                                }else{
+
+                                }else{    
+
                                     this.isUpwdErr = true;
                                 }
                             })
             }
+        },
+        setStorage(data){
+            var loginUid = data.uid;
+            var loginName = data.uname;
+            var loginAvatar = data.avatar;
+
+            sessionStorage.setItem('loginUid',data.uid);
+            sessionStorage.setItem('loginName',data.uname);
+            sessionStorage.setItem('loginAvatar',data.avatar);
         }
+        
     }
 }
 </script>

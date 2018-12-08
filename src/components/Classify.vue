@@ -6,7 +6,7 @@
                 <span><a @click="toGoodList(1)" :class="{ isHover:1==kw }">咖啡</a></span>
                 <span><a @click="toGoodList(4)" :class="{ isHover:4==kw }">蛋糕</a></span>
                 <span><a @click="toGoodList(2)" :class="{ isHover:2==kw }">冰淇淋</a></span>
-                <span><a @click="toGoodList(3)" :class="{ isHover:3==kw }">小食</a></span>
+                <span><a @click="toGoodList(3)" :class="{ isHover:3==kw }">零食</a></span>
             </div>
         </div>
 
@@ -49,6 +49,9 @@ import vGoodList from './goodList'
 <style>
 #classify .logo{
     width: 20%;
+}
+#classify .good_list_container{
+    margin-bottom: 5rem;
 }
 #header{
     position: fixed;

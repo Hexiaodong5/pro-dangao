@@ -6,7 +6,6 @@
         </div>
         <div><img src="../assets/img/mangguo.jpg" alt="芒果" srcset=""></div>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit esse dicta itaque facere iste, sed nobis provident aspernatur eos nisi facilis eaque quisquam nemo tempore tempora. Illum illo laudantium ut?</p>
-        <div><img src="C:\Users\15305\Desktop\pro_self\xbk\src\assets\img\mangguo2.jpg" alt="芒果" srcset=""></div>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem numquam mollitia vitae ex dicta quod qui porro amet beatae recusandae non, iste officiis, velit perspiciatis rem repudiandae assumenda ad magni.</p>
         <div><img src="../assets/img/brave.jpg" alt="" srcset=""></div>
         <p>

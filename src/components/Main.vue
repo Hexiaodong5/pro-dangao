@@ -71,7 +71,7 @@ export default {
     top: 0;
     right: 0;
     left: 0;
-    box-shadow: 0 0.013333rem 0.026667rem rgba(0, 0, 0, .1);
+    box-shadow: 0 0.013333rem 0.026667rem rgba(173, 187, 189, 0.979);
     background: #fff;
     z-index: 10;
 }

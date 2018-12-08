@@ -30,6 +30,7 @@
                 this.$http.get(`http://127.0.0.1/xbk/data/product/list.php?kw=${this.search_kw}`)
                         .then((res)=>{
                             this.goodList = res.data.data;
+                            console.log(this.goodList)
                         })
             },
             toDetail(pid){
